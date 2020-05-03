@@ -64,6 +64,18 @@ app.post(
 app.get("/picture", async (req, res) => {
       // res.status(200).json({ message: "route read picture OK" });
       console.log("route read picture OK");
+      try {
+            const picture = await Picture.find();
+            if (picture) {
+                  res.status(200).json(picture);
+                  console.log("read picture OK");
+            } else {
+                  res.status(404).json({ message: "Image not found" });
+            }
+      } catch (error) {
+            console.error(error);
+            res.status(400).json({ message: error.message });
+      }
 });
 
 app.listen(process.env.PORT, () => {
